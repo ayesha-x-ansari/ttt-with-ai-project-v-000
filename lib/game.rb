@@ -22,10 +22,6 @@ class Game
     #board.turn_count % 2 == 0 ? player_1 : player_2  same as above code
 	end
 
-	def over?
-	  won? || draw?
-	end
-
 	def won?
 	  WIN_COMBINATIONS.detect do |winner|
       # winner 0 means first postion we are checking in our winner array
@@ -37,11 +33,16 @@ class Game
   end
 
 	def draw?
-	  board.full? && !won?
+	  @board.full? && !won?
+	end
+
+  def over?
+	  won? || draw?
 	end
 
 	def winner
-    self.board.cells[won?.first] if won?
+    if winning_combo = won?
+      @winner = @board.cells[winning_combo.first]
 	end
 
 
